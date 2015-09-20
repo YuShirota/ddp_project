@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Devoleping Data Products, Course Project</title>
+  <meta charset="utf-8">
+  <meta name="description" content="Devoleping Data Products, Course Project">
+  <meta name="author" content="YS">
+  <meta name="generator" content="slidify" />
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta http-equiv="X-UA-Compatible" content="chrome=1">
+  <link rel="stylesheet" href="libraries/frameworks/io2012/css/default.css" media="all" >
+  <link rel="stylesheet" href="libraries/frameworks/io2012/css/phone.css" 
+    media="only screen and (max-device-width: 480px)" >
+  <link rel="stylesheet" href="libraries/frameworks/io2012/css/slidify.css" >
+  <link rel="stylesheet" href="libraries/highlighters/highlight.js/css/tomorrow.css" />
+  <base target="_blank"> <!-- This amazingness opens all links in a new tab. -->  <link rel=stylesheet href="./assets/css/ribbons.css"></link>
+
+  
+  <!-- Grab CDN jQuery, fall back to local if offline -->
+  <script src="http://ajax.aspnetcdn.com/ajax/jQuery/jquery-1.7.min.js"></script>
+  <script>window.jQuery || document.write('<script src="libraries/widgets/quiz/js/jquery.js"><\/script>')</script> 
+  <script data-main="libraries/frameworks/io2012/js/slides" 
+    src="libraries/frameworks/io2012/js/require-1.0.8.min.js">
+  </script>
+  
+  
+
+</head>
+<body style="opacity: 0">
+  <slides class="layout-widescreen">
+    
+    <!-- LOGO SLIDE -->
+        <slide class="title-slide segue nobackground">
+  <hgroup class="auto-fadein">
+    <h1>Devoleping Data Products, Course Project</h1>
+    <h2>calculation of positive/negative predictive values</h2>
+    <p>YS<br/>student</p>
+  </hgroup>
+  <article></article>  
+</slide>
+    
+
+    <!-- SLIDES -->
+    <slide class="" id="slide-1" style="background:;">
+  <hgroup>
+    <h2>How correct is my test result??</h2>
+  </hgroup>
+  <article data-timings="">
+    <p>Clinical test is used to determine if a person has a certain disease or not.
+Usually property of a test is described using sensitivity and specificity.</p>
+
+<ol>
+<li>Sensitivity is the probability where a person gets the positive test results if the person actually has the disease.</li>
+<li>Specificity indicates the probability where a person gets the negative test results if the person does not have the disease.</li>
+</ol>
+
+<p>The problem here is, high sensitivity does not necessarily mean that positive test
+results in higher probability of having the disease.</p>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-2" style="background:;">
+  <hgroup>
+    <h2>Illustration of the problem.</h2>
+  </hgroup>
+  <article data-timings="">
+    <p>These two tables show positive and negative predictive values 
+(PPV and NPV respectively) from different
+populations with different prevalence (also known as pre-test probability). Note
+that sensitivity and specificity are 0.9 in both cases.</p>
+
+<p>You can see how PPV and NPV differs with different prevalences.</p>
+
+<div style='float:left;width:48%;' class='centered'>
+  <p>Low prevalence( 0.001)</p>
+
+<pre><code>##        Disease + Disease -
+## Test +       0.9       0.1
+## Test -      99.9     899.1
+</code></pre>
+
+<pre><code>##         PPV         NPV 
+## 0.008928571 0.000111210
+</code></pre>
+
+</div>
+<div style='float:right;width:48%;'>
+  <p>High prevalence (0.1)</p>
+
+<pre><code>##        Disease + Disease -
+## Test +        90        10
+## Test -        90       810
+</code></pre>
+
+<pre><code>##        PPV        NPV 
+## 0.50000000 0.01219512
+</code></pre>
+
+</div>
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-3" style="background:;">
+  <hgroup>
+    <h2>Functions in my shiny app</h2>
+  </hgroup>
+  <article data-timings="">
+    <p>This shiny app calculates PPV and NPV based on
+three parameters: sensisivity, specificity and prevalence.</p>
+
+<p>It&#39;s done using the following functions</p>
+
+<pre><code class="r">positivePV &lt;- function(sens, spec, prev){
+    sens * prev / (sens * prev + (1 - spec) * (1 - prev))
+}
+
+negativePV &lt;- function(sens, spec, prev) {
+    spec * (1- prev) / ((1 - sens) * prev + spec * (1 - prev)) 
+}
+</code></pre>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-4" style="background:;">
+  <hgroup>
+    <h2>It&#39;s now time to have fun!</h2>
+  </hgroup>
+  <article data-timings="">
+    <p>Please test a number of possibilities.</p>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+    <slide class="backdrop"></slide>
+  </slides>
+  <div class="pagination pagination-small" id='io2012-ptoc' style="display:none;">
+    <ul>
+      <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=1 title='How correct is my test result??'>
+         1
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=2 title='Illustration of the problem.'>
+         2
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=3 title='Functions in my shiny app'>
+         3
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=4 title='It&#39;s now time to have fun!'>
+         4
+      </a>
+    </li>
+  </ul>
+  </div>  <!--[if IE]>
+    <script 
+      src="http://ajax.googleapis.com/ajax/libs/chrome-frame/1/CFInstall.min.js">  
+    </script>
+    <script>CFInstall.check({mode: 'overlay'});</script>
+  <![endif]-->
+</body>
+  <!-- Load Javascripts for Widgets -->
+  
+  <!-- LOAD HIGHLIGHTER JS FILES -->
+  <script src="libraries/highlighters/highlight.js/highlight.pack.js"></script>
+  <script>hljs.initHighlightingOnLoad();</script>
+  <!-- DONE LOADING HIGHLIGHTER JS FILES -->
+   
+  </html>
